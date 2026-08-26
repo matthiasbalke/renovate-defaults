@@ -1,0 +1,8 @@
+{
+  "name": "renovate-defaults",
+  "private": true,
+  "packageManager": "bun@1.4.0",
+  "scripts": {
+    "validate": "bunx -p renovate@44.46.0 renovate-config-validator --strict --no-global default.jsonc && bunx -p renovate@44.46.0 renovate-config-validator --strict --no-global .github/renovate.jsonc"
+  }
+}
