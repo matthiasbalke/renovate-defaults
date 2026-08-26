@@ -27,6 +27,8 @@ jobs:
     name: Validate and dry run
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    env:
+      BUN_INSTALL_CACHE_DIR: ${{ runner.temp }}/bun-install-cache
 
     steps:
       - name: Check out repository
@@ -41,6 +43,14 @@ jobs:
 
       - name: Set up Bun
         uses: oven-sh/setup-bun@v2
+
+      - name: Cache Bun packages
+        uses: actions/cache@v5
+        with:
+          path: ${{ env.BUN_INSTALL_CACHE_DIR }}
+          key: bunx-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('package.json') }}
+          restore-keys: |
+            bunx-${{ runner.os }}-${{ runner.arch }}-
 
       - name: Validate configuration
         run: bun run validate
