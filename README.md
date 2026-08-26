@@ -8,7 +8,7 @@ In your repository's `.github/renovate.jsonc`:
 ```json
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["github>matthiasbalke/renovate-defaults"]
+  "extends": ["github>matthiasbalke/renovate-defaults:default.jsonc"]
 }
 ```
 

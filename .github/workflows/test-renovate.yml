@@ -47,9 +47,11 @@ jobs:
 
       - name: Point test config at this commit
         env:
-          PRESET: "github>${{ github.repository }}#${{ github.sha }}"
+          PRESET_REPOSITORY: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
+          PRESET_REVISION: ${{ github.event.pull_request.head.sha || github.sha }}
         run: |
-          sed "s|github>matthiasbalke/renovate-defaults|${PRESET}|" \
+          PRESET="github>${PRESET_REPOSITORY}:default.jsonc#${PRESET_REVISION}"
+          sed "s|github>matthiasbalke/renovate-defaults:default.jsonc|${PRESET}|" \
             .github/renovate.jsonc > "${RUNNER_TEMP}/renovate.jsonc"
           mv "${RUNNER_TEMP}/renovate.jsonc" .github/renovate.jsonc
           grep -Fq "${PRESET}" .github/renovate.jsonc
