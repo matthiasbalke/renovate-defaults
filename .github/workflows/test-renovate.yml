@@ -67,4 +67,5 @@ jobs:
       - name: Test extended configuration
         env:
           RENOVATE_GITHUB_COM_TOKEN: ${{ github.token }}
-        run: bunx renovate@44.46.0 --platform=local --dry-run=lookup
+          RENOVATE_VERSION: 44.46.0
+        run: bunx renovate@${{RENOVATE_VERSION}} --platform=local --dry-run=lookup
