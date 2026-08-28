@@ -23,7 +23,7 @@ permissions:
   contents: read
 
 jobs:
-  test:
+  test-renovate-configs:
     name: Validate and dry run
     runs-on: ubuntu-latest
     timeout-minutes: 15
