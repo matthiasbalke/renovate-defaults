@@ -60,6 +60,21 @@
         "# renovate: dhi_alpine:\\s+datasource=(?<datasource>[^\\s]+)\\s+packageName=(?<packageName>[^\\s]+)\\s+(?:ENV|ARG)\\s+[^\\s=]+_VERSION=(?<currentValue>[^\\s]+)"
       ],
       "versioningTemplate": "loose"
+    },
+    {
+      "customType": "regex",
+      "description": "Update renovate shared presets based on GitHub releases",
+      "managerFilePatterns": [
+        "/^renovate\\.jsonc?$/",
+        "/^\\.github/renovate\\.jsonc?$/"
+      ],
+      "matchStrings": [
+        "\"github>matthiasbalke/renovate-defaults:.*#(?<currentValue>[^\" \\n\\(]+)",
+        "\"github>matthiasbalke/renovate-defaults/.*#(?<currentValue>[^\" \\n\\(]+)"
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "matthiasbalke/renovate-defaults",
+      "depTypeTemplate": "renovate-preset"
     }
   ],
 
@@ -73,5 +88,14 @@
   // https://github.com/renovatebot/renovate/discussions/40077#discussioncomment-15300800
   "registryAliases": {
     "dhi.io": "dhi.io"
-  }
+  },
+
+  "packageRules": [
+    {
+      "matchDepTypes": [
+        "renovate-preset"
+      ],
+      "prPriority": 99
+    }
+  ]
 }
