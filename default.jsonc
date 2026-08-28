@@ -23,14 +23,14 @@
       "defaultRegistryUrlTemplate": "https://dhi.io/apk/alpine/v3.23/main/index.html",
       "format": "plain",
       "transformTemplates": [
-        "( $html := $join(releases.version, \"\\n\"); $json := $match($html, /<script id=\"data\" type=\"application\\/json\">(\\[[\\s\\S]*?\\])<\\/script>/).groups[0]; $data := $json ? $eval($json) : []; { \"releases\": [ $data[n = \"{{{packageName}}}\" and ch = \"v3.23\" and co = \"main\"].{ \"version\": v } ] } )"
+        "( $html := $join(releases.version, \"\\n\"); $matches := $match($html, /\"n\":\"{{{packageName}}}\",\"v\":\"([^\"]+)\",\"a\":\"[^\"]+\",\"ch\":\"v3\\.23\",\"co\":\"main\"/); $versions := $distinct($map($matches, function($match) { $match.groups[0] })); { \"releases\": [ $map($versions, function($version) { { \"version\": $version } }) ] } )"
       ]
     },
     "dhi_alpine_3_24": {
       "defaultRegistryUrlTemplate": "https://dhi.io/apk/alpine/v3.24/main/index.html",
       "format": "plain",
       "transformTemplates": [
-        "( $html := $join(releases.version, \"\\n\"); $json := $match($html, /<script id=\"data\" type=\"application\\/json\">(\\[[\\s\\S]*?\\])<\\/script>/).groups[0]; $data := $json ? $eval($json) : []; { \"releases\": [ $data[n = \"{{{packageName}}}\" and ch = \"v3.24\" and co = \"main\"].{ \"version\": v } ] } )"
+        "( $html := $join(releases.version, \"\\n\"); $matches := $match($html, /\"n\":\"{{{packageName}}}\",\"v\":\"([^\"]+)\",\"a\":\"[^\"]+\",\"ch\":\"v3\\.24\",\"co\":\"main\"/); $versions := $distinct($map($matches, function($match) { $match.groups[0] })); { \"releases\": [ $map($versions, function($version) { { \"version\": $version } }) ] } )"
       ]
     }
   },
