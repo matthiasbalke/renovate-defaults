@@ -68,4 +68,4 @@ jobs:
         env:
           RENOVATE_GITHUB_COM_TOKEN: ${{ github.token }}
           RENOVATE_VERSION: 44.46.0
-        run: bunx renovate@${{RENOVATE_VERSION}} --platform=local --dry-run=lookup
+        run: bunx renovate@${{ env.RENOVATE_VERSION }} --platform=local --dry-run=lookup
