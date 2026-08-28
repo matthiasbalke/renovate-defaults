@@ -3,6 +3,10 @@
   "private": true,
   "packageManager": "bun@1.4.0",
   "scripts": {
-    "validate": "bunx -p renovate@44.46.0 renovate-config-validator --strict --no-global default.jsonc && bunx -p renovate@44.46.0 renovate-config-validator --strict --no-global .github/renovate.jsonc"
+    "validate:renovate:config": "renovate-config-validator --strict --no-global default.jsonc && renovate-config-validator --strict --no-global .github/renovate.jsonc",
+    "test:renovate:config": "renovate --platform=local --dry-run=lookup"
+  },
+  "devDependencies": {
+    "renovate": "44.50.3"
   }
 }

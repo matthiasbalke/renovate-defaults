@@ -6,6 +6,7 @@ on:
       - ".github/renovate.jsonc"
       - ".github/workflows/test-renovate.yml"
       - "default.jsonc"
+      - "bun.lock"
       - "package.json"
       - "validate.sh"
   push:
@@ -15,6 +16,7 @@ on:
       - ".github/renovate.jsonc"
       - ".github/workflows/test-renovate.yml"
       - "default.jsonc"
+      - "bun.lock"
       - "package.json"
       - "validate.sh"
   workflow_dispatch:
@@ -42,16 +44,21 @@ jobs:
       - name: Set up Bun
         uses: oven-sh/setup-bun@v2
 
-      - name: Cache Bun packages
+      - name: Cache Bun packages and installed dependencies
         uses: actions/cache@v6
         with:
-          path: ~/.bun/install/cache
-          key: bunx-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('package.json') }}
+          path: |
+            ~/.bun/install/cache
+            node_modules
+          key: bun-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('bun.lock') }}
           restore-keys: |
-            bunx-${{ runner.os }}-${{ runner.arch }}-
+            bun-${{ runner.os }}-${{ runner.arch }}-
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
 
       - name: Validate configuration
-        run: bun run validate
+        run: bun run validate:renovate:config
 
       - name: Point test config at this commit
         env:
@@ -67,6 +74,4 @@ jobs:
       - name: Test extended configuration
         env:
           RENOVATE_GITHUB_COM_TOKEN: ${{ github.token }}
-          # renovate: datasource=npm depName=renovate
-          RENOVATE_VERSION: 44.50.3
-        run: bunx renovate@${{ env.RENOVATE_VERSION }} --platform=local --dry-run=lookup
+        run: bun run test:renovate:config
