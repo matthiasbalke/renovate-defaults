@@ -7,6 +7,6 @@
     "test:renovate:config": "renovate --platform=local --dry-run=lookup --config-validation-error"
   },
   "devDependencies": {
-    "renovate": "44.50.3"
+    "renovate": "44.65.5"
   }
 }
